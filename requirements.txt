@@ -54,6 +54,7 @@ msgpack==1.0.3
 mutagen==1.46.0
 netaddr==0.8.0
 netifaces==0.11.0
+nodeenv==1.9.1
 oauthlib==3.2.2
 onboard==1.4.1
 packaging==24.0
@@ -75,6 +76,7 @@ pycurl==7.45.3
 pyelftools==0.30
 Pygments==2.17.2
 PyGObject==3.48.2
+PyGObject-stubs==2.12.0
 PyICU==2.12
 pyinotify==0.9.6
 PyJWT==2.7.0
@@ -86,6 +88,7 @@ pypng==0.20231004.0
 pyproject_hooks==1.0.0
 PyQt5==5.15.10
 PyQt5-sip==12.13.0
+pyright==1.1.389
 python-apt==2.7.7+ubuntu3
 python-debian==0.1.49+ubuntu2
 python-gnupg==0.5.2

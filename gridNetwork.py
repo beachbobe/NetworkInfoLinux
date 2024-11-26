@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-#Project added to Git with VSCODE
+#Project added to Git with VSCODE.
 
 import gi, os, socket, requests
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 class SimpleApp(Gtk.Window):
     def __init__(self):
@@ -78,45 +78,31 @@ class SimpleApp(Gtk.Window):
         button = Gtk.Button(label="OK")
         
         # Add the button to the box
+        
+        # Apply CSS styling from a file
+        self.load_css("style.css")
     
         grid.attach(button, 2, 4, 1, 1)  #place button at col 4
         
         button.connect("clicked", self.on_button_clicked)
-
-        # Apply CSS styling
-        self.apply_css(button, """
-            button {
-                background: linear-gradient(to bottom, #61C1CB, #499098);
-                color: white;
-                font-weight: bold;
-                border-radius: 5px;
-                padding: 5px;
-                border: 2px solid #1B5E20;
-                font-size: 14px;
-                box-shadow: 0 2px 4px #686161;
-          
-            }
-            button:hover {
-                background: linear-gradient(to bottom, #6ECFDA, #5EB2BC);
-            }
-            
-            button:active {
-                box-shadow: 0 0 2px #686161;
-                -webkit-transform: translateY(6px);
-            }
-        """)
-
-     
-
-    def apply_css(self, widget, css):
-        css_provider = Gtk.CssProvider()
-        css_provider.load_from_data(css.encode('utf-8'))
-        style_context = widget.get_style_context()
-        style_context.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
-
+    
     def on_button_clicked(self, widget):
         print("Button clicked, closing window.")
         Gtk.main_quit()
+        
+    def load_css(self, css_file):
+        """Load CSS from a file."""
+        if os.path.exists(css_file):
+            css_provider = Gtk.CssProvider()
+            with open(css_file, "rb") as file:
+                css_provider.load_from_data(file.read())
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(),
+                css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_USER,
+            )
+        else:
+            print(f"***ERROR - CSS file '{css_file}' not found!")
 
 # Create and run the application
 if __name__ == "__main__":
