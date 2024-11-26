@@ -1,0 +1,18 @@
+button {
+        background: linear-gradient(to bottom, #61C1CB, #499098);
+        color:white;
+        font-weight: bold;
+        border-radius: 5px;
+        padding: 5px;
+        border: 2px solid #1B5E20;
+        font-size: 14px;
+        box-shadow: 0 2px 4px #686161;        
+       }
+button:hover {
+            background: linear-gradient(to bottom, #6ECFDA, #5EB2BC);
+        }
+            
+button:active {
+                box-shadow: 0 0 2px #686161;
+                -webkit-transform: translateY(6px);
+            }
