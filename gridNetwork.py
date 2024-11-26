@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#Project added to Git with vscode
+#Project added to Git with VSCODE
 
 import gi, os, socket, requests
 
