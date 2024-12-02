@@ -2,11 +2,67 @@
 #Project added to Git with VSCODE.
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QLabel, QDialog
+from PyQt5.QtCore import QThread, pyqtSignal, QTimer
+
 
 import gi, os, socket, requests, speedtest
+import sys
+import time
 
-class NetworkInfo(QMainWindow):
+class Dialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        
+        uic.loadUi("ui/dialog.ui", self)  # Load the dialog UI dynamically
+        
+        # Set up worker thread
+        self.worker = WorkerThread()
+        self.worker.progress_signal.connect(self.update_progress)
+        self.worker.finished_signal.connect(self.task_completed)
+
+        # Start the task when dialog is shown
+        QTimer.singleShot(0, self.start_task)
+
+    def start_task(self):
+        print("Starting task...")
+        self.label.setText("Starting Task")
+        self.worker.start()  # Start the worker thread
+
+    def update_progress(self, step):
+        self.label.setText("Running Test...")
+        print(f"Processing step {step}/5...")
+
+    def task_completed(self):
+        self.label.setText("Test Completed")
+        print("Task Completed!")
+           
+                
+    
+class WorkerThread(QThread):
+    progress_signal = pyqtSignal(int)  # Signal to update progress
+    finished_signal = pyqtSignal()    # Signal to indicate task completion
+
+    def run(self):
+        st = speedtest.Speedtest(secure=True)
+        self.progress_signal.emit(1)  # Emit progress
+        print("Speed Test")
+ 
+ 
+        # Measure speeds
+        download_speed = st.download() / 1_000_000  # Convert to Mbps
+        self.progress_signal.emit(2)  # Emit progress
+        upload_speed = st.upload() / 1_000_000      # Convert to Mbps
+
+        print(f"Download Speed: {download_speed:.2f} Mbps")
+        self.progress_signal.emit(3)  # Emit progress
+        print(f"Upload Speed: {upload_speed:.2f} Mbps")
+   
+        self.finished_signal.emit()  # Emit completion signal
+
+
+
+class MainWindow(QMainWindow):
     def __init__(self):
         
         super().__init__()
@@ -45,40 +101,28 @@ class NetworkInfo(QMainWindow):
         public_ip = get_public_ip()
         
         # Set display fields
-        self.label = self.findChild(QLabel, 'label_ComputerName')
-        self.label.setText(computer_name)
+        self.label_ComputerName.setText(computer_name)
         
-        self.label = self.findChild(QLabel, 'label_LocalIP')
-        self.label.setText(ip_address)
+        self.label_LocalIP.setText(ip_address)
         
-        self.label = self.findChild(QLabel, 'label_PublicIP')
-        self.label.setText(public_ip)
+        self.label_PublicIP.setText(public_ip)
         
-
-        # Access the QPushButton by its object name (pushButton)
-        self.pushButton = self.findChild(QPushButton, 'pushButton_OK')
+        # Connect the clicked signal to the slot
+        self.pushButton_OK.clicked.connect(self.openDialog)
         
-         # Connect the clicked signal to the close slot
-        self.pushButton.clicked.connect(self.pushButtonClicked)
-        
-    def pushButtonClicked(self):
+    #end of __init__ function
+                
+    def openDialog(self):
                         
-        self.close()
+        dialog = Dialog(self)
+        dialog.exec_()  # Show the dialog as a modal window
         
                 
-    def speed_test(self):
-        st = speedtest.Speedtest(secure=True)
-
-        # Measure speeds
-        download_speed = st.download() / 1_000_000  # Convert to Mbps
-        upload_speed = st.upload() / 1_000_000      # Convert to Mbps
-
-        print(f"Download Speed: {download_speed:.2f} Mbps")
-        print(f"Upload Speed: {upload_speed:.2f} Mbps")
+    
 
 # Create and run the application
 if __name__ == "__main__":
-    app = QApplication([])
-    window = NetworkInfo()
+    app = QApplication(sys.argv)
+    window = MainWindow()
     window.show()
     app.exec()
