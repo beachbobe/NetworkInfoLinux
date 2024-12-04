@@ -36,11 +36,19 @@
    <widget class="QLabel" name="label_ComputerName">
     <property name="geometry">
      <rect>
-      <x>148</x>
-      <y>31</y>
+      <x>147</x>
+      <y>29</y>
       <width>151</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>TEXT LABEL</string>
@@ -63,10 +71,18 @@
     <property name="geometry">
      <rect>
       <x>145</x>
-      <y>61</y>
+      <y>59</y>
       <width>151</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>TEXT LABEL</string>
@@ -89,10 +105,18 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>91</y>
+      <y>89</y>
       <width>141</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>TEXT LABEL</string>
