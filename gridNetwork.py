@@ -8,8 +8,6 @@ from PyQt5.QtCore import QThread, pyqtSignal, QTimer
 import os, socket, requests, speedtest
 import sys
 
-
-import tkinter as tk
 from tkinter import messagebox
 
 #MainWindow class ----------------------------------------------------------------------
