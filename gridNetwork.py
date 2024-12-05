@@ -2,13 +2,12 @@
 #Project added to Git with VSCODE.
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QLabel, QDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, QTimer
 
-import subprocess
-import gi, os, socket, requests, speedtest
+import os, socket, requests, speedtest
 import sys
-import time
+
 
 import tkinter as tk
 from tkinter import messagebox
