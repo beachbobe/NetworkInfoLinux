@@ -8,7 +8,7 @@ from PyQt5.QtCore import QThread, pyqtSignal, QTimer
 import os, socket, requests, speedtest
 import sys
 
-from tkinter import messagebox
+import messagebox as m #Customized messagebox module
 
 #MainWindow class ----------------------------------------------------------------------
 class MainWindow(QMainWindow):
@@ -147,7 +147,7 @@ if __name__ == "__main__":
     
     #check if there is an active network available
     if (window.check_network() == False):
-        messagebox.showinfo(title="Error", message="No Network Available.", icon=messagebox.WARNING)
+        m.messagebox("Error", "No Network Available.", "ERROR")
         sys.exit(0)
     
     window.show()
