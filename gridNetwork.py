@@ -19,10 +19,6 @@ class MainWindow(QMainWindow):
         
         super().__init__()
         
-        #if (self.check_network() == False):
-            #messagebox.showinfo("Error", "No Network Available.")
-            #sys.exit(0)
-       
         uic.loadUi('ui/mainwindow.ui', self)  # Load the .ui file
         
         # Change the title bar text
@@ -76,18 +72,14 @@ class MainWindow(QMainWindow):
         
     #Check for active network
     def check_network(host="8.8.8.8", count=1, timeout=1):
-    
         try:
-            # Using the ping command for Linux and Windows compatibility
-            response = subprocess.run(
-            ["ping", "-c", str(count), "-W", str(timeout), host],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
-            return response.returncode == 0
-        except Exception as e:
-            print(f"Error: {e}")
-            return False
+            # Connect to a well-known address like Google's DNS server
+            socket.create_connection(("8.8.8.8", 53), timeout=3)
+            return True
+        except OSError:
+            pass
+            
+        return False
            
   
 
@@ -155,5 +147,11 @@ class WorkerThread(QThread):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
+    
+    #check if there is an active network available
+    if (window.check_network() == False):
+        messagebox.showinfo(title="Error", message="No Network Available.", icon=messagebox.WARNING)
+        sys.exit(0)
+    
     window.show()
     app.exec()
