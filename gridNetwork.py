@@ -5,8 +5,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
 from PyQt5.QtCore import QThread, pyqtSignal, QTimer
 
-import os, socket, requests, speedtest
-import sys
+import socket, requests, speedtest
+import sys, platform
 
 import messagebox as m #Customized messagebox module
 
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Network Info")
                 
         # Get computer name
-        computer_name = os.uname().nodename
+        computer_name = platform.uname().node
         
         #Get Current IP
         def get_ip_address():
